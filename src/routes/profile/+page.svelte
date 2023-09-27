@@ -1,10 +1,9 @@
 <script lang="ts">
     import {Placement, Sign} from '../../Types.ts';
     import type {Profile} from '../../Types';
-    import ZodiacSign from "../../components/ZodiacSign.svelte";
-    import PlacementIcon from "../../components/PlacementIcon.svelte";
+    import ProfileView from "../../components/ProfileView.svelte";
 
-    let person: Profile = {
+    let profile: Profile = {
         name: 'John Doe',
         placement: {
             [Placement.Sun]: Sign.Cancer,
@@ -21,36 +20,4 @@
     }
 </script>
 
-<style>
-    .profile {
-        width: 300px;
-        align-self: center;
-    }
-
-    .profile td {
-        text-align: center;
-    }
-</style>
-
-<h1>{person.name}</h1>
-<table class="profile">
-    <thead>
-        <tr>
-            <th>What</th>
-            <th>Sign</th>
-        </tr>
-    </thead>
-    <tbody>
-    {#each Object.entries(person.placement) as [placement, sign]}
-        <tr>
-            <td>
-                <PlacementIcon {placement} />
-            </td>
-            <td>
-                <ZodiacSign {sign} />
-                ({sign})
-            </td>
-        </tr>
-    {/each}
-    </tbody>
-</table>
+<ProfileView {profile} />

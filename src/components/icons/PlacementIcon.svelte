@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Placement} from "../Types";
+    import {Placement} from "../../Types";
     import SvgIcon from '@jamescoyle/svelte-icon';
     import {
         mdiWeatherSunny, // Sun

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Sign} from "../Types.js";
+    import {Sign} from "../../Types.js";
     import SvgIcon from '@jamescoyle/svelte-icon';
     import {
         mdiZodiacAries,
