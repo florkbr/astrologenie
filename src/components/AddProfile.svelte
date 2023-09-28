@@ -65,9 +65,7 @@
             }
         };
 
-        dispatch('profile', {
-            profile
-        });
+        dispatch('profile', profile);
     };
 </script>
 

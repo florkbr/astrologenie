@@ -1,23 +1,23 @@
 <script lang="ts">
-    import {Placement, Sign} from '../../Types.ts';
-    import type {Profile} from '../../Types';
-    import ProfileView from "../../components/ProfileView.svelte";
-
-    let profile: Profile = {
-        name: 'John Doe',
-        placement: {
-            [Placement.Sun]: Sign.Cancer,
-            [Placement.Rising]: Sign.Gemini,
-            [Placement.Moon]: Sign.Libra,
-            [Placement.Mercury]: Sign.Leo,
-            [Placement.Mars]: Sign.Capricorn,
-            [Placement._2ndHouse]: Sign.Cancer,
-            [Placement._3rdHouse]: Sign.Leo,
-            [Placement._6thHouse]: Sign.Scorpio,
-            [Placement._10thHouse]: Sign.Pisces,
-            [Placement._11thHouse]: Sign.Aries
-        }
-    }
+    import {profiles} from "../../stores";
+    import SvgIcon from '@jamescoyle/svelte-icon';
+    import {
+        mdiDelete
+    } from "@mdi/js";
 </script>
+<style>
+</style>
 
-<ProfileView {profile} />
+<a href="/profile/add">Add profile</a>
+<ul>
+    {#each $profiles as profile}
+        <li>
+            <a href="/profile/view/{profile.name}">{profile.name}</a>
+            <a class="delete" href="#delete" on:click={() => {
+                $profiles = $profiles.filter(p => p.name !== profile.name);
+            }}>
+                <SvgIcon type="mdi" path={mdiDelete} />
+            </a>
+        </li>
+    {/each}
+</ul>
