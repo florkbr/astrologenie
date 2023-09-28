@@ -3,9 +3,19 @@
 	import type { Profile } from '../../Types';
 	import ZodiacSign from '../../components/ZodiacSign.svelte';
 	import PlacementIcon from '../../components/PlacementIcon.svelte';
+	import { storedName } from '../../stores.js';
+	import { onDestroy } from 'svelte';
+
+	let name;
+
+	const unsubscribeName = storedName.subscribe((value) => {
+		name = value;
+	});
+
+	onDestroy(unsubscribeName);
 
 	let person: Profile = {
-		name: 'John Doe',
+		name: name || 'John Doe',
 		placement: {
 			[Placement.Sun]: Sign.Cancer,
 			[Placement.Rising]: Sign.Gemini,
