@@ -15,10 +15,6 @@
 	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
 
 	$: {
-		if (profile === null) {
-			goto('/profile');
-		}
-
 		if (profile) {
 			planets = {};
 			for (const planetKey in profile.planets) {
@@ -29,33 +25,11 @@
 		}
 	}
 
-	// Reference
-	// const unsubscribeHoroscope = storedHoroscope.subscribe((value) => {
-	// 	horoscope = value;
-	// 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 	// @ts-ignore
-	// 	if (horoscope?.CelestialBodies?.all) {
-	// 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 		// @ts-ignore
-	// 		planets = Object.fromEntries(
-	// 			horoscope.CelestialBodies.all.map((entry) => {
-	// 				return [entry.label, [entry.ChartPosition.Ecliptic.ArcDegrees.degrees]];
-	// 			})
-	// 		);
-	// 	}
-	// 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 	// @ts-ignore
-	// 	if (horoscope?.ZodiacCusps) {
-	// 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 		// @ts-ignore
-	// 		cusps = horoscope.ZodiacCusps.map((entry) => {
-	// 			return entry.ChartPosition.Horizon.ArcDegrees.degrees;
-	// 		});
-	// 	}
-	// 	console.log(horoscope);
-	// });
-
 	onMount(async () => {
+		if (profile === null) {
+			goto('/profile');
+		}
+
 		const astrochart = await import('@astrodraw/astrochart');
 		const Chart = astrochart.default;
 		const chart = new Chart('chart', 800, 800);
@@ -73,7 +47,9 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<a href="/profile/view/{profile.name}">Back to my profile</a>
+{#if profile}
+	<a href="/profile/view/{profile.name}">Back to my profile</a>
+{/if}
 <section>
 	<div id="chart" class="chart" class:hidden={!planets} />
 </section>
