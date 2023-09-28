@@ -1,7 +1,7 @@
 export enum Element {
     AQUARIUS = "Aquarius",
     ARIES = "Aries",
-    ASCENDING = "ASC", // part of the birth chart.
+    RISING = "Rising", // part of the birth chart.
     CANCER = "Cancer",
     CAPRICORN = "Capricorn",
     DC = "DC",

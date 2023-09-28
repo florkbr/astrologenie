@@ -18,10 +18,13 @@ export class AspectCalculator {
     private readonly MALEFIC_PLANETS = [Element.MARS, Element.NEPTUNE, Element.PLUTO, Element.SATURN, Element.URANUS];
 
     /**
+     * Uncomment when the DC and IC elements become relevant.
+     * 
      * The list of elements to be skipped to be counted when calculating the stats.
      * For now we will keep it only for the birth elements.
-     */
+     *
     private readonly SKIPPABLE_ELEMENTS = [Element.DC, Element.IC];
+    */
 
     /**
      * Positive stats holder.
@@ -61,9 +64,11 @@ export class AspectCalculator {
         degreesCalculator.calculateTotalDegrees(firstPerson);
         degreesCalculator.calculateTotalDegrees(secondPerson);
 
+        // Uncomment if it becomes relevant to calculate the DC and IC positions.
+        //
         // Add DC and IC to both persons, based on the ASC and MC positions.
-        degreesCalculator.calculateDCandIC(firstPerson);
-        degreesCalculator.calculateDCandIC(secondPerson);
+        // degreesCalculator.calculateDCandIC(firstPerson);
+        // degreesCalculator.calculateDCandIC(secondPerson);
 
         const firstPersonPlacements: Map<Element, Placement> = firstPerson.getAllPlacements();
         const secondPersonPlacements: Map<Element, Placement> = secondPerson.getAllPlacements();
@@ -73,11 +78,13 @@ export class AspectCalculator {
             for (const [secondElement, secondPlacement] of secondPersonPlacements.entries()) {
                 for (const aspect of aspects) {
                     if (this.arePlacementsInAspect(aspect, firstPlacement, secondPlacement)) {
+                        // Uncoment if it becomes relevant to take DC and IC positions into account.
+                        //
                         // The DC and IC elements should not be compared. However, their aspects might be useful
                         // in the future, that is why it is left here just in case.
-                        if (this.shouldSkipElement(firstElement) || this.shouldSkipElement(secondElement)) {
-                            break;
-                        }
+                        // if (this.shouldSkipElement(firstElement) || this.shouldSkipElement(secondElement)) {
+                        //    break;
+                        //}
 
                         const orb: number = this.calculateTotalOrb(aspect, firstPlacement, secondPlacement);
                         this.calculateStat(aspect, orb, firstElement, secondElement);
@@ -220,13 +227,16 @@ export class AspectCalculator {
     }
 
     /**
+     * Uncomment if it becomes relevant to take the DC and IC positions into account.
+     * 
      * Checks if the given element should not be considered for the stats.
      * @param element element to check.
      * @returns true if the element has to be skipped.
-     */
+     *
     private shouldSkipElement(element: Element): boolean {
         return this.SKIPPABLE_ELEMENTS.includes(element);
     }
+    */
 
     /**
      * Calculates the nature of the given aspect and the placements.

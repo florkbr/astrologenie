@@ -59,12 +59,14 @@ export class DegreesCalculator {
     }
 
     /**
+     * Unused for now, since we don't need it for our calculations.
+     * 
      * Calculates the DC and IC placements depending on the ASC and MC
      * placements, and sets them in the given object.
      * @param person the person to whom we will update their placements. 
-     */
+     *
     public calculateDCandIC(person: Person): void {
-        const asc = person.getASC().getDegrees();
+        const asc = person.getRising().getDegrees();
 
         if (asc > 180) {
             person.setDC(new Placement(Element.DC, asc - 180))
@@ -79,4 +81,5 @@ export class DegreesCalculator {
             person.setIC(new Placement(Element.IC, mc + 180))
         }
     }
+    */
 }
