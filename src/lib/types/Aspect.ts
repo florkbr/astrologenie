@@ -3,8 +3,10 @@
  */
 enum AspectAllowedOrb {
     CONJUNCTION = 10,
+    /* eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values*/
     OPPOSITION = 10,
     SQUARE = 6,
+    /* eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values*/
     TRINE = 6,
     SEXTILE = 4,
     MINOR = 2,
@@ -51,6 +53,7 @@ enum AspectStat {
     CONJUNCTION = 5.0,
     OPPOSITION = 4.5,
     TRINE = 4,
+    /* eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values*/
     SQUARE = 4,
     SEXTILE = 3,
     MINOR = 2,
