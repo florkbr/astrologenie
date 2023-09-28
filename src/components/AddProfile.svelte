@@ -2,7 +2,7 @@
     import axios from 'axios';
     import {createEventDispatcher} from 'svelte';
     import {Horoscope, Origin} from 'circular-natal-horoscope-js/dist/index';
-    import type {Profile} from "../Types";
+    import type {PlacementData, Profile} from "../Types";
     import {Placement} from "../Types";
 
     const dispatch = createEventDispatcher();
@@ -16,7 +16,7 @@
     const handleAdd = async () => {
 
         const params = {
-            access_key: '<ENTER API KEY>',
+            access_key: '<<Enter API KEY>>',
             query: city + ', ' + state + ', ' + country
         };
 
@@ -61,19 +61,29 @@
             language: 'en'
         });
 
+        const dataFromCelestialBodies = (celestialBody: any): PlacementData => ({
+            sign: celestialBody.Sign.label,
+            degrees: celestialBody.ChartPosition.Ecliptic.ArcDegrees.degrees
+        });
+
+        const dataFromHouses = (house: any): PlacementData => ({
+            sign: house.Sign.label,
+            degrees: house.ChartPosition.StartPosition.Horizon.ArcDegrees.degrees
+        });
+
         const profile: Profile = {
             name,
             placement: {
-                [Placement.Sun]: horoscope.SunSign.label,
-                [Placement.Rising]: horoscope.Ascendant.Sign.label,
-                [Placement.Moon]: horoscope.CelestialBodies.moon.Sign.label,
-                [Placement.Mercury]: horoscope.CelestialBodies.mercury.Sign.label,
-                [Placement.Mars]: horoscope.CelestialBodies.mars.Sign.label,
-                [Placement._2ndHouse]: horoscope.Houses[1].Sign.label,
-                [Placement._3rdHouse]: horoscope.Houses[2].Sign.label,
-                [Placement._6thHouse]: horoscope.Houses[5].Sign.label,
-                [Placement._10thHouse]: horoscope.Houses[9].Sign.label,
-                [Placement._11thHouse]: horoscope.Houses[10].Sign.label,
+                [Placement.Sun]: dataFromCelestialBodies(horoscope.CelestialBodies.sun),
+                [Placement.Rising]: dataFromCelestialBodies(horoscope.Ascendant),
+                [Placement.Moon]: dataFromCelestialBodies(horoscope.CelestialBodies.moon),
+                [Placement.Mercury]: dataFromCelestialBodies(horoscope.CelestialBodies.mercury),
+                [Placement.Mars]: dataFromCelestialBodies(horoscope.CelestialBodies.mars),
+                [Placement._2ndHouse]: dataFromHouses(horoscope.Houses[1]),
+                [Placement._3rdHouse]: dataFromHouses(horoscope.Houses[2]),
+                [Placement._6thHouse]: dataFromHouses(horoscope.Houses[5]),
+                [Placement._10thHouse]: dataFromHouses(horoscope.Houses[9]),
+                [Placement._11thHouse]: dataFromHouses(horoscope.Houses[10]),
             }
         };
 

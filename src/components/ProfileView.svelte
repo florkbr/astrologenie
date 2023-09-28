@@ -31,20 +31,20 @@ export let profile: Profile;
     </tr>
     </thead>
     <tbody>
-    {#each Object.entries(profile.placement) as [placement, sign]}
+    {#each Object.entries(profile.placement) as [placement, data]}
         <tr>
             <td>
                 <PlacementIcon {placement} />
             </td>
             <td>
-                <ZodiacSignIcon {sign} />
-                ({sign})
+                <ZodiacSignIcon sign={data.sign} />
+                ({data.sign})
             </td>
             <td>
-                <ElementIcon element={ElementFromSign[sign]} />
+                <ElementIcon element={ElementFromSign[data.sign]} />
             </td>
             <td>
-                {ModalityFromSign[sign]}
+                {ModalityFromSign[data.sign]}
             </td>
         </tr>
     {/each}

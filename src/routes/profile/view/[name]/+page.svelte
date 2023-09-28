@@ -15,5 +15,6 @@
 
 {#if profile !== undefined}
     <a href="/profile">Back to list</a>
+    <a href="/profile/view/{profile.name}/chart">View my chart</a>
     <ProfileView {profile} />
 {/if}

@@ -1,6 +1,11 @@
 export interface Profile {
     name: string;
-    placement: Record<Placement, Sign>;
+    placement: Record<Placement, PlacementData>;
+}
+
+export interface PlacementData {
+    sign: Sign;
+    degrees: number;
 }
 
 export const enum Placement {
