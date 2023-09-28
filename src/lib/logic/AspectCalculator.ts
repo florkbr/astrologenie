@@ -1,8 +1,8 @@
 import { DegreesCalculator } from "./DegreesCalculator";
 import { Aspect } from "../types/Aspect";
 import { Element } from "../types/Element";
-import { Person } from "../types/Person";
-import { Placement } from "../types/Placement"
+import type { Person } from "../types/Person";
+import type { Placement } from "../types/Placement"
 import { StatNature } from "../types/StatNature";
 
 export class AspectCalculator {

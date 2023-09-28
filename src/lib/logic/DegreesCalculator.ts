@@ -1,6 +1,6 @@
 import { Element } from "../types/Element";
-import { Placement } from "../types/Placement";
-import { Person } from "../types/Person";
+import type { Placement } from "../types/Placement";
+import type { Person } from "../types/Person";
 
 export class DegreesCalculator {
     /**
