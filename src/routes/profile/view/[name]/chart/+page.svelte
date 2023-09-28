@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	import {goto} from "$app/navigation";
-	import {Placement} from "../../../../../Types";
-	import {profiles} from "../../../../../stores";
+	import { goto } from '$app/navigation';
+	import { Placement } from '../../../../../Types';
+	import { profiles } from '../../../../../stores';
 
 	export let data;
 
@@ -11,27 +11,13 @@
 	 */
 	let planets;
 
-	const cusps = [
-			0,
-			30,
-			60,
-			90,
-			120,
-			150,
-			180,
-			210,
-			240,
-			270,
-			300,
-			330
-	];
+	const cusps = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
 
-	$: profile = $profiles.find(p => p.name === data.name) ?? null;
+	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
 
 	$: {
 		if (profile === null) {
-			console.log(profile);
-			// goto('/profile');
+			goto('/profile');
 		}
 
 		if (profile) {
@@ -49,7 +35,6 @@
 			}
 		}
 	}
-
 
 	// Reference
 	// const unsubscribeHoroscope = storedHoroscope.subscribe((value) => {
@@ -77,7 +62,6 @@
 	// 	console.log(horoscope);
 	// });
 
-
 	onMount(async () => {
 		const astrochart = await import('@astrodraw/astrochart');
 		const Chart = astrochart.default;
@@ -98,11 +82,7 @@
 
 <a href="/profile/view/{profile.name}">Back to my profile</a>
 <section>
-	<div
-		id="chart"
-		class="chart"
-		class:hidden={!planets}
-	/>
+	<div id="chart" class="chart" class:hidden={!planets} />
 </section>
 
 <style>

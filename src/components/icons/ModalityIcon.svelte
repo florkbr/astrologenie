@@ -1,22 +1,21 @@
 <script lang="ts">
+	import { Modality } from '../../Types';
+	import SvgIcon from '@jamescoyle/svelte-icon';
+	import {
+		mdiTsunami, // water
+		mdiImageFilterHdr, // earth
+		mdiFire // fire
+	} from '@mdi/js';
 
-    import {Modality} from "../../Types";
-    import SvgIcon from '@jamescoyle/svelte-icon';
-    import {
-        mdiTsunami, // water
-        mdiImageFilterHdr, // earth
-        mdiFire, // fire
-    } from "@mdi/js";
+	export let modality: Modality;
 
-    export let modality: Modality;
+	const mdiPathMap: Record<Modality, string> = {
+		[Modality.Cardinal]: mdiTsunami,
+		[Modality.Fixed]: mdiImageFilterHdr,
+		[Modality.Mutable]: mdiFire
+	};
 
-    const mdiPathMap: Record<Modality, string> = {
-        [Modality.Cardinal]: mdiTsunami,
-        [Modality.Fixed]: mdiImageFilterHdr,
-        [Modality.Mutable]: mdiFire,
-    }
-
-    $: path = mdiPathMap[modality];
+	$: path = mdiPathMap[modality];
 </script>
 
 <SvgIcon type="mdi" {path} />

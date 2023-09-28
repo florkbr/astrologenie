@@ -5,13 +5,13 @@ import { dev } from '$app/environment';
 export const csr = dev;
 
 type LoadInput = {
-    params: {
-        name: string;
-    }
-}
+	params: {
+		name: string;
+	};
+};
 
 export function load(input: LoadInput) {
-    return {
-        name: input.params.name
-    };
+	return {
+		name: input.params.name
+	};
 }
