@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { Placement } from '../../../../../Types';
 	import { profiles } from '../../../../../stores';
+	import { mdiPathMap } from '../../../../../IconMap';
+	import { Placement } from '../../../../../Types';
 
 	export let data;
 
@@ -11,61 +12,82 @@
 	 */
 	let planets;
 
-	const cusps = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+	let cusps = [60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390];
 
 	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
 
 	$: {
+		if (profile) {
+			planets = {};
+			for (const planetKey in profile.planets) {
+				planets[planetKey] = [profile.planets[planetKey].degrees];
+			}
+
+			cusps = profile.houses.map((h) => h.degrees);
+		}
+	}
+
+	// Adapted from the internal method used to write the Sun
+	const writeMdiSymbol = (mdiSymbol, name, x, y, context, rotate) => {
+		const xShift = -13; // px
+		const yShift = -9; // px
+
+		x = Math.round(x + xShift * context.settings.SYMBOL_SCALE);
+		y = Math.round(y + yShift * context.settings.SYMBOL_SCALE);
+
+		const wrapper = document.createElementNS(context.root.namespaceURI, 'g');
+		wrapper.setAttribute(
+			'transform',
+			'translate(' +
+				-x * (context.settings.SYMBOL_SCALE - 1) +
+				x +
+				',' +
+				-y * (context.settings.SYMBOL_SCALE - 1) +
+				y +
+				') scale(' +
+				context.settings.SYMBOL_SCALE +
+				')'
+		);
+
+		const node = document.createElementNS(context.root.namespaceURI, 'path');
+
+		node.setAttribute('d', mdiSymbol);
+
+		node.setAttribute('stroke', context.settings.POINTS_COLOR);
+		node.setAttribute('stroke-width', '0.5px');
+
+		if (rotate) {
+			node.style.transformOrigin = 'center';
+			node.style.transform = `rotate(${rotate}deg)`;
+			node.style.transformBox = 'fill-box';
+		}
+
+		wrapper.appendChild(node);
+
+		return wrapper;
+	};
+
+	onMount(async () => {
 		if (profile === null) {
 			goto('/profile');
 		}
 
-		if (profile) {
-			const planetsKeys = [
-				Placement.Sun,
-				Placement.Moon,
-				Placement.Mars,
-				Placement.Mercury,
-				Placement.Rising
-			];
-
-			planets = {};
-			for (const planetKey of planetsKeys) {
-				planets[planetKey] = [profile.placement[planetKey].degrees];
-			}
-		}
-	}
-
-	// Reference
-	// const unsubscribeHoroscope = storedHoroscope.subscribe((value) => {
-	// 	horoscope = value;
-	// 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 	// @ts-ignore
-	// 	if (horoscope?.CelestialBodies?.all) {
-	// 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 		// @ts-ignore
-	// 		planets = Object.fromEntries(
-	// 			horoscope.CelestialBodies.all.map((entry) => {
-	// 				return [entry.label, [entry.ChartPosition.Ecliptic.ArcDegrees.degrees]];
-	// 			})
-	// 		);
-	// 	}
-	// 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 	// @ts-ignore
-	// 	if (horoscope?.ZodiacCusps) {
-	// 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// 		// @ts-ignore
-	// 		cusps = horoscope.ZodiacCusps.map((entry) => {
-	// 			return entry.ChartPosition.Horizon.ArcDegrees.degrees;
-	// 		});
-	// 	}
-	// 	console.log(horoscope);
-	// });
-
-	onMount(async () => {
 		const astrochart = await import('@astrodraw/astrochart');
 		const Chart = astrochart.default;
-		const chart = new Chart('chart', 800, 800);
+		const chart = new Chart('chart', 800, 800, {
+			CUSTOM_SYMBOL_FN: function (name, x, y, context) {
+				if (name in mdiPathMap) {
+					let rotate = 0;
+					if (name === Placement.Rising) {
+						rotate = 45;
+					}
+
+					return writeMdiSymbol(mdiPathMap[name], name, x, y, context, rotate);
+				}
+
+				return undefined;
+			}
+		});
 		const data = {
 			planets,
 			cusps
@@ -80,7 +102,9 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<a href="/profile/view/{profile.name}">Back to my profile</a>
+{#if profile}
+	<a href="/profile/view/{profile.name}">Back to my profile</a>
+{/if}
 <section>
 	<div id="chart" class="chart" class:hidden={!planets} />
 </section>

@@ -1,6 +1,7 @@
 export interface Profile {
 	name: string;
-	placement: Record<Placement, PlacementData>;
+	planets: Record<Placement, PlacementData>;
+	houses: Array<PlacementData>;
 }
 
 export interface PlacementData {
@@ -13,12 +14,7 @@ export const enum Placement {
 	Rising = 'Rising',
 	Moon = 'Moon',
 	Mercury = 'Mercury',
-	Mars = 'Mars',
-	_2ndHouse = '2nd House',
-	_3rdHouse = '3rd House',
-	_6thHouse = '6th House',
-	_10thHouse = '10th House',
-	_11thHouse = '11th House'
+	Mars = 'Mars'
 }
 
 export const enum Sign {
@@ -83,3 +79,5 @@ export const ModalityFromSign: Readonly<Record<Sign, Modality>> = {
 	[Sign.Pisces]: Modality.Mutable,
 	[Sign.Gemini]: Modality.Mutable
 };
+
+export const RelevantHouses: ReadonlyArray<number> = [1, 2, 5, 9, 10];
