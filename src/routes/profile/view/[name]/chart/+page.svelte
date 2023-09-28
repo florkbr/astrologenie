@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { profiles } from '../../../../../stores';
+	import { mdiPathMap } from '../../../../../IconMap';
+	import { Placement } from '../../../../../Types';
 
 	export let data;
 
@@ -25,6 +27,46 @@
 		}
 	}
 
+	// Adapted from the internal method used to write the Sun
+	const writeMdiSymbol = (mdiSymbol, name, x, y, context, rotate) => {
+		const xShift = -13; // px
+		const yShift = -9; // px
+
+		x = Math.round(x + xShift * context.settings.SYMBOL_SCALE);
+		y = Math.round(y + yShift * context.settings.SYMBOL_SCALE);
+
+		const wrapper = document.createElementNS(context.root.namespaceURI, 'g');
+		wrapper.setAttribute(
+			'transform',
+			'translate(' +
+				-x * (context.settings.SYMBOL_SCALE - 1) +
+				x +
+				',' +
+				-y * (context.settings.SYMBOL_SCALE - 1) +
+				y +
+				') scale(' +
+				context.settings.SYMBOL_SCALE +
+				')'
+		);
+
+		const node = document.createElementNS(context.root.namespaceURI, 'path');
+
+		node.setAttribute('d', mdiSymbol);
+
+		node.setAttribute('stroke', context.settings.POINTS_COLOR);
+		node.setAttribute('stroke-width', '0.5px');
+
+		if (rotate) {
+			node.style.transformOrigin = 'center';
+			node.style.transform = `rotate(${rotate}deg)`;
+			node.style.transformBox = 'fill-box';
+		}
+
+		wrapper.appendChild(node);
+
+		return wrapper;
+	};
+
 	onMount(async () => {
 		if (profile === null) {
 			goto('/profile');
@@ -32,7 +74,20 @@
 
 		const astrochart = await import('@astrodraw/astrochart');
 		const Chart = astrochart.default;
-		const chart = new Chart('chart', 800, 800);
+		const chart = new Chart('chart', 800, 800, {
+			CUSTOM_SYMBOL_FN: function (name, x, y, context) {
+				if (name in mdiPathMap) {
+					let rotate = 0;
+					if (name === Placement.Rising) {
+						rotate = 45;
+					}
+
+					return writeMdiSymbol(mdiPathMap[name], name, x, y, context, rotate);
+				}
+
+				return undefined;
+			}
+		});
 		const data = {
 			planets,
 			cusps

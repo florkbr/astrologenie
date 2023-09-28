@@ -1,23 +1,9 @@
 <script lang="ts">
 	import { Placement } from '../../Types';
 	import SvgIcon from '@jamescoyle/svelte-icon';
-	import {
-		mdiWeatherSunny, // Sun
-		mdiArrowUpBold, // Rising
-		mdiMoonWaningCrescent, // Moon
-		mdiGenderMaleFemaleVariant, // Mercury
-		mdiGenderMale // Mars
-	} from '@mdi/js';
+	import { mdiPathMap } from '../../IconMap';
 
 	export let placement: Placement;
-
-	const mdiPathMap: Record<Placement, string> = {
-		[Placement.Sun]: mdiWeatherSunny,
-		[Placement.Rising]: mdiArrowUpBold,
-		[Placement.Moon]: mdiMoonWaningCrescent,
-		[Placement.Mercury]: mdiGenderMaleFemaleVariant,
-		[Placement.Mars]: mdiGenderMale
-	};
 
 	let rotate = 0;
 	$: if (placement === Placement.Rising) {
