@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { Placement } from '../../../../../Types';
 	import { profiles } from '../../../../../stores';
 
 	export let data;
@@ -11,7 +10,7 @@
 	 */
 	let planets;
 
-	const cusps = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+	let cusps = [60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390];
 
 	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
 
@@ -21,18 +20,12 @@
 		}
 
 		if (profile) {
-			const planetsKeys = [
-				Placement.Sun,
-				Placement.Moon,
-				Placement.Mars,
-				Placement.Mercury,
-				Placement.Rising
-			];
-
 			planets = {};
-			for (const planetKey of planetsKeys) {
-				planets[planetKey] = [profile.placement[planetKey].degrees];
+			for (const planetKey in profile.planets) {
+				planets[planetKey] = [profile.planets[planetKey].degrees];
 			}
+
+			cusps = profile.houses.map((h) => h.degrees);
 		}
 	}
 

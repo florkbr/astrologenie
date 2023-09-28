@@ -70,23 +70,19 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const dataFromHouses = (house: any): PlacementData => ({
 			sign: house.Sign.label,
-			degrees: house.ChartPosition.StartPosition.Horizon.ArcDegrees.degrees
+			degrees: house.ChartPosition.StartPosition.Ecliptic.ArcDegrees.degrees
 		});
 
 		const profile: Profile = {
 			name,
-			placement: {
+			planets: {
 				[Placement.Sun]: dataFromCelestialBodies(horoscope.CelestialBodies.sun),
 				[Placement.Rising]: dataFromCelestialBodies(horoscope.Ascendant),
 				[Placement.Moon]: dataFromCelestialBodies(horoscope.CelestialBodies.moon),
 				[Placement.Mercury]: dataFromCelestialBodies(horoscope.CelestialBodies.mercury),
-				[Placement.Mars]: dataFromCelestialBodies(horoscope.CelestialBodies.mars),
-				[Placement._2ndHouse]: dataFromHouses(horoscope.Houses[1]),
-				[Placement._3rdHouse]: dataFromHouses(horoscope.Houses[2]),
-				[Placement._6thHouse]: dataFromHouses(horoscope.Houses[5]),
-				[Placement._10thHouse]: dataFromHouses(horoscope.Houses[9]),
-				[Placement._11thHouse]: dataFromHouses(horoscope.Houses[10])
-			}
+				[Placement.Mars]: dataFromCelestialBodies(horoscope.CelestialBodies.mars)
+			},
+			houses: horoscope.Houses.map(dataFromHouses)
 		};
 
 		dispatch('profile', profile);
