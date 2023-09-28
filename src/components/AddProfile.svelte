@@ -1,4 +1,5 @@
 <script lang="ts">
+    import axios from 'axios';
     import {createEventDispatcher} from 'svelte';
     import {Horoscope, Origin} from 'circular-natal-horoscope-js/dist/index';
     import type {Profile} from "../Types";
@@ -8,10 +9,17 @@
 
     let name: string;
     let dateOfBirth: Date;
-    let lat: number;
-    let long: number;
+    let city;
+    let state;
+    let country;
 
-    const handleAdd = () => {
+    const handleAdd = async () => {
+
+        const params = {
+            access_key: '<ENTER API KEY>',
+            query: city + ', ' + state + ', ' + country
+        };
+
         if (!name) {
             alert('You are required to add a name');
             return;
@@ -22,10 +30,14 @@
             return;
         }
 
-        if (!lat || !long) {
-            alert('You are required to enter the latitude and longitude of where you were birth');
+        if (!city || !state || !country) {
+            alert('You are required to enter the city, state and country');
             return;
         }
+
+        const response = await axios.get('http://api.positionstack.com/v1/forward', { params });
+        const lat = response.data.data[0].latitude;
+        const long = response.data.data[0].longitude;
 
         const dateOfBirthAsDate = new Date(dateOfBirth);
         const origin = new Origin({
@@ -92,9 +104,20 @@
     </div>
     <div class="row">
         <label>
-            Place of birth:
-            <label>Lat: <input bind:value={lat} type="number" /></label>
-            <label>Long: <input bind:value={long} type="number" /></label>
+            City
+            <input bind:value={city} /><br>
+        </label>
+    </div>
+    <div class="row">
+        <label>
+            State
+            <input bind:value={state} /><br>
+        </label>
+    </div>
+    <div class="row">
+        <label>
+            Country
+            <input bind:value={country} /><br>
         </label>
     </div>
     <div>
