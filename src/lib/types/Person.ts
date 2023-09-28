@@ -1,5 +1,6 @@
 import { Element } from "./Element";
-import { Placement } from "./Placement";
+import type { Placement } from "./Placement";
+import { HouseNumber, type House } from "./House";
 
 export class Person {
     private readonly name: string;
@@ -32,6 +33,21 @@ export class Person {
     // @ts-ignore
     private venus?: Placement;
 
+    // The person's houses.
+    private house_2: House;
+    private house_3: House;
+    private house_6: House;
+    private house_10: House;
+    private house_11: House;
+    // optional
+    private house_1?: House;
+    private house_4?: House;
+    private house_5?: House;
+    private house_7?: House;
+    private house_8?: House;
+    private house_9?: House;
+    private house_12?: House;
+
     // The following two will be initialized in a later stage.
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -47,13 +63,25 @@ export class Person {
         sun: Placement,
         mars: Placement,
         mercury: Placement,
+        house_2: House,
+        house_3: House,
+        house_6: House,
+        house_10: House,
+        house_11: House,
         jupiter?: Placement,
         mc?: Placement,
         neptune?: Placement,
         pluto?: Placement,
         saturn?: Placement,
         uranus?: Placement,
-        venus?: Placement
+        venus?: Placement,
+        house_1?: House,
+        house_4?: House,
+        house_5?: House,
+        house_7?: House,
+        house_8?: House,
+        house_9?: House,
+        house_12?: House,
     ) {
         // Save the person's name...
         this.name = name;
@@ -71,6 +99,20 @@ export class Person {
         this.saturn = saturn;
         this.uranus = uranus;
         this.venus = venus;
+
+        // ... and its houses.
+        this.house_1 = house_1;
+        this.house_2 = house_2;
+        this.house_3 = house_3;
+        this.house_4 = house_4;
+        this.house_5 = house_5;
+        this.house_6 = house_6;
+        this.house_7 = house_7;
+        this.house_8 = house_8;
+        this.house_9 = house_9;
+        this.house_10 = house_10;
+        this.house_11 = house_11;
+        this.house_12 = house_12;
     }
 
     public getName(): string {
@@ -105,6 +147,26 @@ export class Person {
         this.ic = ic;
     }
 
+    public getHouse2(): House {
+        return this.house_2;
+    }
+
+    public getHouse3(): House {
+        return this.house_3;
+    }
+
+    public getHouse6(): House {
+        return this.house_6;
+    }
+
+    public getHouse10(): House {
+        return this.house_10;
+    }
+
+    public getHouse11(): House {
+        return this.house_11;
+    }
+
     /**
      * Gets all the placements of this person.
      * @returns a map of the placements on the birth chart. The key
@@ -120,5 +182,23 @@ export class Person {
         placements.set(Element.MERCURY, this.mercury);
 
         return placements;
+    }
+
+    /**
+     * Gets all the houses of this person.
+     * @returns a map of the houses on the birth chart. The key
+     * of the map represents the house on the birth chart.
+     */
+    public getAllHouses(): Map<HouseNumber, House> {
+        const houses = new Map<HouseNumber, House>();
+
+        houses.set(HouseNumber.HOUSE_2, this.house_2);
+        houses.set(HouseNumber.HOUSE_3, this.house_3);
+        houses.set(HouseNumber.HOUSE_6, this.house_6);
+        houses.set(HouseNumber.HOUSE_10, this.house_10);
+        houses.set(HouseNumber.HOUSE_11, this.house_11);
+
+
+        return houses;
     }
 }
