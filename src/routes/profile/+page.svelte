@@ -5,7 +5,7 @@
 	import { AspectCalculator } from '../../lib/logic/AspectCalculator';
 	import { onMount } from 'svelte';
 	import { HouseCalculator } from '$lib/logic/HouseCalculator';
-	import {profileToPersonType} from "$lib/ProfileToPerson";
+	import { profileToPersonType } from '$lib/ProfileToPerson';
 
 	onMount(() => {
 		const ac = new AspectCalculator();
@@ -22,7 +22,6 @@
 			hc.processHousesToPlacements(persons[0], persons[1]);
 			console.log(hc.getHouseOverlays());
 		}
-
 	});
 </script>
 
