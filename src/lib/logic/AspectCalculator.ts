@@ -29,11 +29,11 @@ export class AspectCalculator {
     /**
      * Positive stats holder.
      */
-    private readonly positiveStats: Map<Element, number> = new Map<Element, number>();
+    private positiveStats: Map<Element, number> = new Map<Element, number>();
     /**
      * Negative stats holder.
      */
-    private readonly negativeStats: Map<Element, number> = new Map<Element, number>();
+    private negativeStats: Map<Element, number> = new Map<Element, number>();
 
     /**
      * Get the calculated positive stats.
@@ -58,6 +58,10 @@ export class AspectCalculator {
      * @param secondPerson the second person to process.
      */
     public processPeople(firstPerson: Person, secondPerson: Person): void {
+        // Reinitialize the stats every time we process new pairs of people.
+        this.positiveStats = new Map<Element, number>();
+        this.negativeStats = new Map<Element, number>();
+
         const degreesCalculator = new DegreesCalculator();
 
         // Calculate and update the people's birth placements.
