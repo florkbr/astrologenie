@@ -31,8 +31,8 @@
 			return;
 		}
 
-		if (!city || !state || !country) {
-			alert('You are required to enter the city, state and country');
+		if ((!city && !state) || !country) {
+			alert('You are required to enter the city (and/or state) and country');
 			return;
 		}
 
