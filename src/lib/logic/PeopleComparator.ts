@@ -21,14 +21,11 @@ export class PeopleComparator {
             // Initialize the rows for each column.
             resultsMatrix[i] = [];
 
-            for (let j = 0; j < people.length; j++) {
+            for (let j = 0; j < i; j++) {
                 // The diagonal of the matrix represents as if we were
                 // one person to himself, and that doesn't make sense.
                 // Also,the matrix is symetrical, so it doesn't make
                 // sense to compare one person to another and back.
-                if (i === j || i > j) {
-                    continue;
-                }
 
                 this.aspectCalculator.processPeople(people[i], people[j]);
                 this.houseCalculator.processHousesToPlacements(people[i], people[j]);
