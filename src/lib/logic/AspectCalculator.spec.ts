@@ -2,71 +2,70 @@ import test from 'ava';
 import { Element } from '../types/Element';
 import { Person } from '../types/Person';
 import { Placement } from '../types/Placement';
-import { House, HouseNumber} from '../types/House';
+import { House, HouseNumber } from '../types/House';
 
 import { AspectCalculator } from './AspectCalculator';
 /**
  * Tests that procesing two people yields the expected results.
  */
 test('process people', (t) => {
-    // Set up the stub elements.
+	// Set up the stub elements.
 
-    const person1 = new Person(
-        "John Doe",
-        new Placement(Element.ARIES, 25),       // rising
-        new Placement(Element.CANCER, 0),       // moon
-        new Placement(Element.PISCES, 12),      // sun
-        new Placement(Element.LIBRA, 2),        // mars
-        new Placement(Element.LEO, 24),         // mercury
-        new House(HouseNumber.HOUSE_2, Element.ARIES),
-        new House(HouseNumber.HOUSE_3, Element.CANCER),
-        new House(HouseNumber.HOUSE_6, Element.PISCES),
-        new House(HouseNumber.HOUSE_10, Element.LIBRA),
-        new House(HouseNumber.HOUSE_11, Element.LEO),
-        // optionals
-        new Placement(Element.CAPRICORN, 10),   // jupiter
-        new Placement(Element.AQUARIUS, 13),    // mc
-        new Placement(Element.SAGITTARIUS, 10), // neptune
-        new Placement(Element.GEMINI, 25),      // pluto
-        new Placement(Element.TAURUS, 10),      // saturn
-        new Placement(Element.ARIES, 12),       // uranus
-        new Placement(Element.CAPRICORN, 10)    // venus
-    );
+	const person1 = new Person(
+		'John Doe',
+		new Placement(Element.ARIES, 25), // rising
+		new Placement(Element.CANCER, 0), // moon
+		new Placement(Element.PISCES, 12), // sun
+		new Placement(Element.LIBRA, 2), // mars
+		new Placement(Element.LEO, 24), // mercury
+		new House(HouseNumber.HOUSE_2, Element.ARIES),
+		new House(HouseNumber.HOUSE_3, Element.CANCER),
+		new House(HouseNumber.HOUSE_6, Element.PISCES),
+		new House(HouseNumber.HOUSE_10, Element.LIBRA),
+		new House(HouseNumber.HOUSE_11, Element.LEO),
+		// optionals
+		new Placement(Element.CAPRICORN, 10), // jupiter
+		new Placement(Element.AQUARIUS, 13), // mc
+		new Placement(Element.SAGITTARIUS, 10), // neptune
+		new Placement(Element.GEMINI, 25), // pluto
+		new Placement(Element.TAURUS, 10), // saturn
+		new Placement(Element.ARIES, 12), // uranus
+		new Placement(Element.CAPRICORN, 10) // venus
+	);
 
-    const person2 = new Person(
-        "Jane Doe",
-        new Placement(Element.ARIES, 1),        // rising
-        new Placement(Element.CANCER, 11),      // moon
-        new Placement(Element.PISCES, 5),       // sun
-        new Placement(Element.LIBRA, 29),       // mars
-        new Placement(Element.LEO, 8),          // mercury
-        new House(HouseNumber.HOUSE_2, Element.LEO),
-        new House(HouseNumber.HOUSE_3, Element.LIBRA),
-        new House(HouseNumber.HOUSE_6, Element.PISCES),
-        new House(HouseNumber.HOUSE_10, Element.CANCER),
-        new House(HouseNumber.HOUSE_11, Element.ARIES),
-        // optionals
-        new Placement(Element.CAPRICORN, 5),    // jupiter
-        new Placement(Element.AQUARIUS, 12),    // mc
-        new Placement(Element.SAGITTARIUS, 19), // neptune
-        new Placement(Element.GEMINI, 24),      // pluto
-        new Placement(Element.TAURUS, 3),       // saturn
-        new Placement(Element.ARIES, 11),       // uranus
-        new Placement(Element.CAPRICORN, 23)    // venus
-    );
+	const person2 = new Person(
+		'Jane Doe',
+		new Placement(Element.ARIES, 1), // rising
+		new Placement(Element.CANCER, 11), // moon
+		new Placement(Element.PISCES, 5), // sun
+		new Placement(Element.LIBRA, 29), // mars
+		new Placement(Element.LEO, 8), // mercury
+		new House(HouseNumber.HOUSE_2, Element.LEO),
+		new House(HouseNumber.HOUSE_3, Element.LIBRA),
+		new House(HouseNumber.HOUSE_6, Element.PISCES),
+		new House(HouseNumber.HOUSE_10, Element.CANCER),
+		new House(HouseNumber.HOUSE_11, Element.ARIES),
+		// optionals
+		new Placement(Element.CAPRICORN, 5), // jupiter
+		new Placement(Element.AQUARIUS, 12), // mc
+		new Placement(Element.SAGITTARIUS, 19), // neptune
+		new Placement(Element.GEMINI, 24), // pluto
+		new Placement(Element.TAURUS, 3), // saturn
+		new Placement(Element.ARIES, 11), // uranus
+		new Placement(Element.CAPRICORN, 23) // venus
+	);
 
+	// Call the function under test.
+	const aspectCalculator = new AspectCalculator();
+	aspectCalculator.processPeople(person1, person2);
 
-    // Call the function under test.
-    const aspectCalculator = new AspectCalculator();
-    aspectCalculator.processPeople(person1, person2);
+	// Fetch the positive results.
+	const positiveStats: Map<Element, number> = aspectCalculator.getPositiveStats();
+	const negativeStats: Map<Element, number> = aspectCalculator.getNegativeStats();
 
-    // Fetch the positive results.
-    const positiveStats: Map<Element, number> = aspectCalculator.getPositiveStats();
-    const negativeStats: Map<Element, number> = aspectCalculator.getNegativeStats();
-
-    // Prepare the expected positive values. Uncomment in the case that we use all the
-    // placements for the calculations.
-    /*
+	// Prepare the expected positive values. Uncomment in the case that we use all the
+	// placements for the calculations.
+	/*
     const expectedPositiveResults: Map<Element, number> = new Map<Element, number>([
         [Element.RISING, 35.5],
         [Element.MOON, 48.5],
@@ -82,35 +81,44 @@ test('process people', (t) => {
         [Element.PLUTO, 47.5]
     ]);
     */
-    const expectedPositiveResults: Map<Element, number> = new Map<Element, number>([
-        [Element.RISING, 35.5],
-        [Element.SUN, 12],
-        [Element.MOON, 48.5],
-        [Element.MARS, 28],
-        [Element.MERCURY, 53],
-        [Element.PLUTO, 47.5],
-    ]);
+	const expectedPositiveResults: Map<Element, number> = new Map<Element, number>([
+		[Element.RISING, 35.5],
+		[Element.SUN, 12],
+		[Element.MOON, 48.5],
+		[Element.MARS, 28],
+		[Element.MERCURY, 53],
+		[Element.PLUTO, 47.5]
+	]);
 
-    // Check that the map sizes are correct.
-    t.is(positiveStats.size, expectedPositiveResults.size, "the size of the map of the positive stats is not correct");
-    
-    // Check that the positive results map contains the expected values.
-    for (const [expectedElement, expectedValue] of expectedPositiveResults.entries()) {
-        const statNumberResult = positiveStats.get(expectedElement);
+	// Check that the map sizes are correct.
+	t.is(
+		positiveStats.size,
+		expectedPositiveResults.size,
+		'the size of the map of the positive stats is not correct'
+	);
 
-        if (statNumberResult === undefined) {
-            t.fail(`the expected element "${expectedElement}" was not found in the resulting results map`);
-        }
+	// Check that the positive results map contains the expected values.
+	for (const [expectedElement, expectedValue] of expectedPositiveResults.entries()) {
+		const statNumberResult = positiveStats.get(expectedElement);
 
-        t.is(statNumberResult, expectedValue, `the calculated value is different from the expected one for the element "${expectedElement}"`);
-    }
+		if (statNumberResult === undefined) {
+			t.fail(
+				`the expected element "${expectedElement}" was not found in the resulting results map`
+			);
+		}
 
-    // Fetch the negative results.
+		t.is(
+			statNumberResult,
+			expectedValue,
+			`the calculated value is different from the expected one for the element "${expectedElement}"`
+		);
+	}
 
+	// Fetch the negative results.
 
-    // Prepare the expected negative values. Uncomment in the case that we use all the
-    // placements for the calculations.
-    /*
+	// Prepare the expected negative values. Uncomment in the case that we use all the
+	// placements for the calculations.
+	/*
     const expectedNegativeResults: Map<Element, number> = new Map<Element, number>([
         [Element.RISING, 61],
         [Element.MARS, 56],
@@ -126,26 +134,35 @@ test('process people', (t) => {
         [Element.PLUTO, 67.5]
     ]);
     */
-    const expectedNegativeResults: Map<Element, number> = new Map<Element, number>([
-        [Element.RISING, 61],
-        [Element.SUN, 30],
-        [Element.MOON, 76.5],
-        [Element.MARS, 56],
-        [Element.MERCURY, 49],
-    ]);
+	const expectedNegativeResults: Map<Element, number> = new Map<Element, number>([
+		[Element.RISING, 61],
+		[Element.SUN, 30],
+		[Element.MOON, 76.5],
+		[Element.MARS, 56],
+		[Element.MERCURY, 49]
+	]);
 
-    // Check that the map sizes are correct.
-    t.is(negativeStats.size, expectedNegativeResults.size, "the size of the map of the negative stats is not correct");
+	// Check that the map sizes are correct.
+	t.is(
+		negativeStats.size,
+		expectedNegativeResults.size,
+		'the size of the map of the negative stats is not correct'
+	);
 
-    // Check that the negative results map contains the expected values.
-    for (const [expectedElement, expectedValue] of expectedNegativeResults.entries()) {
-        const statNumberResult = negativeStats.get(expectedElement);
+	// Check that the negative results map contains the expected values.
+	for (const [expectedElement, expectedValue] of expectedNegativeResults.entries()) {
+		const statNumberResult = negativeStats.get(expectedElement);
 
-        if (statNumberResult === undefined) {
-            t.fail(`the expected element "${expectedElement}" was not found in the resulting results map`);
-        }
+		if (statNumberResult === undefined) {
+			t.fail(
+				`the expected element "${expectedElement}" was not found in the resulting results map`
+			);
+		}
 
-        t.is(statNumberResult, expectedValue, `the calculated value is different from the expected one for the element "${expectedElement}"`);
-    }
-  }
-);
+		t.is(
+			statNumberResult,
+			expectedValue,
+			`the calculated value is different from the expected one for the element "${expectedElement}"`
+		);
+	}
+});
