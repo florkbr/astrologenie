@@ -103,8 +103,6 @@
         const ac = new AspectCalculator();
         const hc = new HouseCalculator();
 
-        debugger;
-
         const persons = $profiles.map(
             (profile) => {
                 return profileToPersonType(profile)
