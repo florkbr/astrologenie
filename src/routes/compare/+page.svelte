@@ -7,34 +7,36 @@
 	import type { PlacementData, Profile } from '../../Types';
 	import { error } from '@sveltejs/kit';
 	import { House, HouseNumber } from '$lib/types/House';
+	import { onMount } from 'svelte';
+	import { HouseCalculator } from '$lib/logic/HouseCalculator';
 
     function stringToElement(str): Element {
         const upperStr = str.toUpperCase()
-        if (upperStr !== "AQUARIUS" || 
-            upperStr !== "ARIES" ||
-            upperStr !== "RISING" ||
-            upperStr !== "CANCER" ||
-            upperStr !== "CAPRICORN" ||
-            upperStr !== "DC" ||
-            upperStr !== "GEMINI" ||
-            upperStr !== "IC" ||
-            upperStr !== "JUPITER" ||
-            upperStr !== "LEO" ||
-            upperStr !== "LIBRA" ||
-            upperStr !== "MARS" ||
-            upperStr !== "MC" ||
-            upperStr !== "MERCURY" ||
-            upperStr !== "MOON" ||
-            upperStr !== "NEPTUNE" ||
-            upperStr !== "PISCES" ||
-            upperStr !== "PLUTO" ||
-            upperStr !== "SAGITTARIUS" ||
-            upperStr !== "SATURN" ||
-            upperStr !== "SCORPIO" ||
-            upperStr !== "SUN" ||
-            upperStr !== "TAURUS" ||
-            upperStr !== "URANUS" ||
-            upperStr !== "VENUS" ||
+        if (upperStr !== "AQUARIUS" && 
+            upperStr !== "ARIES" &&
+            upperStr !== "RISING" &&
+            upperStr !== "CANCER" &&
+            upperStr !== "CAPRICORN" &&
+            upperStr !== "DC" &&
+            upperStr !== "GEMINI" &&
+            upperStr !== "IC" &&
+            upperStr !== "JUPITER" &&
+            upperStr !== "LEO" &&
+            upperStr !== "LIBRA" &&
+            upperStr !== "MARS" &&
+            upperStr !== "MC" &&
+            upperStr !== "MERCURY" &&
+            upperStr !== "MOON" &&
+            upperStr !== "NEPTUNE" &&
+            upperStr !== "PISCES" &&
+            upperStr !== "PLUTO" &&
+            upperStr !== "SAGITTARIUS" &&
+            upperStr !== "SATURN" &&
+            upperStr !== "SCORPIO" &&
+            upperStr !== "SUN" &&
+            upperStr !== "TAURUS" &&
+            upperStr !== "URANUS" &&
+            upperStr !== "VENUS" &&
             upperStr !== "VIRGO"
             ) {
             throw new Error("Look up failed.");
@@ -45,17 +47,17 @@
 
     function stringToHouseNumber(str): HouseNumber {
         const upperStr = str.toUpperCase()
-        if (upperStr !== "HOUSE_1" || 
-            upperStr !== "HOUSE_2" ||
-            upperStr !== "HOUSE_3" ||
-            upperStr !== "HOUSE_4" ||
-            upperStr !== "HOUSE_5" ||
-            upperStr !== "HOUSE_6" ||
-            upperStr !== "HOUSE_7" ||
-            upperStr !== "HOUSE_8" ||
-            upperStr !== "HOUSE_9" ||
-            upperStr !== "HOUSE_10" ||
-            upperStr !== "HOUSE_11" ||
+        if (upperStr !== "HOUSE_1" && 
+            upperStr !== "HOUSE_2" &&
+            upperStr !== "HOUSE_3" &&
+            upperStr !== "HOUSE_4" &&
+            upperStr !== "HOUSE_5" &&
+            upperStr !== "HOUSE_6" &&
+            upperStr !== "HOUSE_7" &&
+            upperStr !== "HOUSE_8" &&
+            upperStr !== "HOUSE_9" &&
+            upperStr !== "HOUSE_10" &&
+            upperStr !== "HOUSE_11" &&
             upperStr !== "HOUSE_12"
             ) {
             throw new Error("Look up failed.");
@@ -97,19 +99,26 @@
         return currPerson;
     }
 
-    const as = new AspectCalculator()
+    onMount(() => {
+        const ac = new AspectCalculator();
+        const hc = new HouseCalculator();
 
-    let i=0
-    let j=0
+        debugger;
 
-    const persons = $profiles.map(
-        (profile) => {
-            return profileToPersonType(profile)
-        }
-    )
-    as.processPeople(persons[0], persons[1])
-    console.log(as.getPositiveStats())
-    console.log(as.getNegativeStats())
+        const persons = $profiles.map(
+            (profile) => {
+                return profileToPersonType(profile)
+            }
+        )
+
+        ac.processPeople(persons[0], persons[1])
+        console.log(ac.getPositiveStats())
+        console.log(ac.getNegativeStats())
+
+        hc.processHousesToPlacements(persons[0], persons[1])
+        console.log(hc.getHouseOverlays())
+
+    });
 </script>
 
 <div class="column">
