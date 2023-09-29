@@ -1,5 +1,5 @@
 export enum StatNature {
-    POSITIVE,
-    MIXED,
-    NEGATIVE,
+	POSITIVE,
+	MIXED,
+	NEGATIVE
 }
