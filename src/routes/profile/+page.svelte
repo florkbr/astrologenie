@@ -5,6 +5,8 @@
 </script>
 
 <a href="/profile/add">Add profile</a>
+<a href="/profile/import">Import profiles</a>
+<a href="/profile/export">Export profiles</a>
 <ul>
 	{#each $profiles as profile}
 		<li>
