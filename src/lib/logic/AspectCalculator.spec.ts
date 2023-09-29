@@ -2,9 +2,9 @@ import test from 'ava';
 import { Element } from '../types/Element';
 import { Person } from '../types/Person';
 import { Placement } from '../types/Placement';
+import { House, HouseNumber} from '../types/House';
 
 import { AspectCalculator } from './AspectCalculator';
-
 /**
  * Tests that procesing two people yields the expected results.
  */
@@ -18,6 +18,12 @@ test('process people', (t) => {
         new Placement(Element.PISCES, 12),      // sun
         new Placement(Element.LIBRA, 2),        // mars
         new Placement(Element.LEO, 24),         // mercury
+        new House(HouseNumber.HOUSE_2, Element.ARIES),
+        new House(HouseNumber.HOUSE_3, Element.CANCER),
+        new House(HouseNumber.HOUSE_6, Element.PISCES),
+        new House(HouseNumber.HOUSE_10, Element.LIBRA),
+        new House(HouseNumber.HOUSE_11, Element.LEO),
+        // optionals
         new Placement(Element.CAPRICORN, 10),   // jupiter
         new Placement(Element.AQUARIUS, 13),    // mc
         new Placement(Element.SAGITTARIUS, 10), // neptune
@@ -34,6 +40,12 @@ test('process people', (t) => {
         new Placement(Element.PISCES, 5),       // sun
         new Placement(Element.LIBRA, 29),       // mars
         new Placement(Element.LEO, 8),          // mercury
+        new House(HouseNumber.HOUSE_2, Element.LEO),
+        new House(HouseNumber.HOUSE_3, Element.LIBRA),
+        new House(HouseNumber.HOUSE_6, Element.PISCES),
+        new House(HouseNumber.HOUSE_10, Element.CANCER),
+        new House(HouseNumber.HOUSE_11, Element.ARIES),
+        // optionals
         new Placement(Element.CAPRICORN, 5),    // jupiter
         new Placement(Element.AQUARIUS, 12),    // mc
         new Placement(Element.SAGITTARIUS, 19), // neptune
