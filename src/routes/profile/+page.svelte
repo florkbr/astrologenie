@@ -111,12 +111,14 @@
 			return profileToPersonType(profile);
 		});
 
-		ac.processPeople(persons[0], persons[1]);
-		console.log(ac.getPositiveStats());
-		console.log(ac.getNegativeStats());
+		if (persons.length >= 2) {
+			ac.processPeople(persons[0], persons[1]);
+			console.log(ac.getPositiveStats());
+			console.log(ac.getNegativeStats());
+			hc.processHousesToPlacements(persons[0], persons[1]);
+			console.log(hc.getHouseOverlays());
+		}
 
-		hc.processHousesToPlacements(persons[0], persons[1]);
-		console.log(hc.getHouseOverlays());
 	});
 </script>
 
