@@ -39,7 +39,7 @@
 	</div>
 	<div class="row">
 		<label>
-			Split remaining people
+			Force everyone in a team
 			<input bind:checked={splitRemaining} type="checkbox" /><br />
 		</label>
 	</div>
@@ -86,11 +86,15 @@
 					<td>{profile.name}</td>
 				{/each}
 			</tr>
-			{#each matrixScore as rowScore, index}
+			{#each matrixScore as rowScore, i}
 				<tr>
-					<td>{$profiles[index].name}</td>
+					<td>{$profiles[i].name}</td>
 					{#each rowScore as score}
 						<td>{score}</td>
+					{/each}
+					<td>-</td>
+					{#each [...new Array($profiles.length - i - 1).keys()] as dj}
+						<td class="mirror">{matrixScore[dj + i + 1][i]}</td>
 					{/each}
 				</tr>
 			{/each}
@@ -102,6 +106,11 @@
 	table,
 	td {
 		border: 1px solid;
+		text-align: center;
+	}
+
+	td.mirror {
+		color: gray;
 	}
 
 	form {
