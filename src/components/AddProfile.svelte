@@ -4,6 +4,7 @@
 	import { Horoscope, Origin } from 'circular-natal-horoscope-js/dist/index';
 	import type { PlacementData, Profile } from '../Types';
 	import { Placement } from '../Types';
+	import { PUBLIC_POSITION_STACK_API_KEY } from '$env/static/public';
 
 	const dispatch = createEventDispatcher();
 
@@ -15,7 +16,7 @@
 
 	const handleAdd = async () => {
 		const params = {
-			access_key: '<TOKEN>',
+			access_key: PUBLIC_POSITION_STACK_API_KEY,
 			query: city + ', ' + state,
 			country: country
 		};
