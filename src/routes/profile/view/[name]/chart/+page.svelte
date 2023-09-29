@@ -11,10 +11,12 @@
 	 * @type {{ [k: string]: any; }}
 	 */
 	let planets;
+	let other_planets;
 
 	let cusps = [60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390];
 
 	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
+	$: other = $profiles.find(p => p.name === 'Foobar') ?? null;
 
 	$: {
 		if (profile) {
@@ -25,10 +27,17 @@
 
 			cusps = profile.houses.map((h) => h.degrees);
 		}
+
+		if (other) {
+			other_planets = {};
+			for (const planetKey in other.planets) {
+				other_planets[planetKey] = [other.planets[planetKey].degrees];
+			}
+		}
 	}
 
 	// Adapted from the internal method used to write the Sun
-	const writeMdiSymbol = (mdiSymbol, name, x, y, context, rotate) => {
+	const writeMdiSymbol = (mdiSymbol, name, x, y, context, rotate, color) => {
 		const xShift = -13; // px
 		const yShift = -9; // px
 
@@ -53,8 +62,9 @@
 
 		node.setAttribute('d', mdiSymbol);
 
-		node.setAttribute('stroke', context.settings.POINTS_COLOR);
+		node.setAttribute('stroke', color);
 		node.setAttribute('stroke-width', '0.5px');
+		node.setAttribute('fill', color);
 
 		if (rotate) {
 			node.style.transformOrigin = 'center';
@@ -76,20 +86,30 @@
 		const Chart = astrochart.default;
 		const chart = new Chart('chart', 800, 800, {
 			CUSTOM_SYMBOL_FN: function (name, x, y, context) {
+				let color = context.settings.POINTS_COLOR;
+
+				if (name.endsWith('_1')) {
+					name = name.split('_1')[0];
+					color = 'red';
+				}
+
 				if (name in mdiPathMap) {
 					let rotate = 0;
 					if (name === Placement.Rising) {
 						rotate = 45;
 					}
 
-					return writeMdiSymbol(mdiPathMap[name], name, x, y, context, rotate);
+					return writeMdiSymbol(mdiPathMap[name], name, x, y, context, rotate, color);
 				}
 
 				return undefined;
 			}
 		});
 		const data = {
-			planets,
+			planets: {
+				...planets,
+				...Object.fromEntries(Object.entries(other_planets).map(([key, value]) => [`${key}_1`, value]))
+			},
 			cusps
 		};
 		const radix = chart.radix(data);
