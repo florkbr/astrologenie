@@ -30,6 +30,9 @@ export class HouseCalculator {
      * @param secondPerson the second person to process.
      */
     public processHousesToPlacements(firstPerson: Person, secondPerson: Person): void {
+        // Initialize every time we process people.
+        this.houseOverlays = new Array<HouseOverlay>();
+
         const firstPersonHouses: Array<House> = firstPerson.getAllHouses();
         const secondPersonPlacements: Map<Element, Placement> = secondPerson.getAllPlacements();
 
