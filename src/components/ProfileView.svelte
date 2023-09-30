@@ -58,6 +58,11 @@
 </table>
 
 <style>
+	table {
+		background-color: white;
+		box-shadow: 0 6px 10px rgb(0 0 0 / 0.5);
+		padding: 10px;
+	}
 	.profile {
 		width: 500px;
 		align-self: center;

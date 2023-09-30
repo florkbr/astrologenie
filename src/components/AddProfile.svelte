@@ -91,6 +91,7 @@
 </script>
 
 <form>
+	<h3>Add profile</h3>
 	<div class="row">
 		<label>
 			Name:
@@ -121,9 +122,11 @@
 			<input bind:value={country} /><br />
 		</label>
 	</div>
-	<div>
+	<div class="controls">
 		<button on:click={handleAdd}>Add</button>
+		<a href="/profile">Cancel</a>
 	</div>
+	<img src="/rocket.png" alt="spaceship" class="spaceship" />
 </form>
 
 <style>
@@ -131,5 +134,29 @@
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		width: max-content;
+		text-align: center;
+	}
+
+	form .row {
+		align-self: flex-end;
+	}
+
+	form .controls {
+		margin-top: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	form .controls *:nth-child(n + 2) {
+		margin-left: 10px;
+	}
+
+	.spaceship {
+		width: 200px;
+		height: 400px;
+		align-self: center;
+		margin-top: 25px;
 	}
 </style>

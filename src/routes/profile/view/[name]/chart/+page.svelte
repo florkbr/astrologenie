@@ -103,11 +103,14 @@
 </svelte:head>
 
 {#if profile}
-	<a href="/profile/view/{profile.name}">Back to my profile</a>
+	<h1>{profile.name}</h1>
 {/if}
 <section>
 	<div id="chart" class="chart" class:hidden={!planets} />
 </section>
+{#if profile}
+	<a href="/profile/view/{profile.name}">Back to my profile</a>
+{/if}
 
 <style>
 	section {
@@ -126,5 +129,16 @@
 
 	.chart.hidden {
 		display: none;
+	}
+
+	a {
+		align-self: center;
+		margin-top: 10px;
+	}
+	@media only screen and (max-width: 750px) {
+		.chart {
+			width: 400px;
+			height: 400px;
+		}
 	}
 </style>

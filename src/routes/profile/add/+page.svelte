@@ -4,6 +4,11 @@
 	import { profiles } from '../../../stores';
 </script>
 
+<svelte:head>
+	<title>Add Profile</title>
+	<meta name="description" content="Astro Team Builder" />
+</svelte:head>
+
 <AddProfile
 	on:profile={(event) => {
 		const profile = event.detail;
