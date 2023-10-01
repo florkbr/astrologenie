@@ -12,8 +12,31 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Your Profile</title>
+	<meta name="description" content="Astro Team Builder" />
+</svelte:head>
+
 {#if profile}
-	<a href="/profile">Back to list</a>
-	<a href="/profile/view/{profile.name}/chart">View my chart</a>
-	<ProfileView {profile} />
+	<div>
+		<ProfileView {profile} />
+		<div class="controls">
+			<a href="/profile/view/{profile.name}/chart">View my chart</a>
+			<a href="/profile">Back to profiles</a>
+		</div>
+	</div>
 {/if}
+
+<style>
+	.controls {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin-top: 15px;
+	}
+
+	.controls *:nth-child(n) {
+		margin-top: 10px;
+	}
+</style>
