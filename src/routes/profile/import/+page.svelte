@@ -28,7 +28,7 @@
 	<textarea rows="20" bind:value={importedRawData} placeholder="Enter some JSON..." />
 	<div class="controls">
 		<button on:click={handleImport}>Import</button>
-		<a href="/profile">Back to profiles</a>
+		<a href="/astrologenie/profile">Back to profiles</a>
 	</div>
 </div>
 

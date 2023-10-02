@@ -116,7 +116,7 @@
 			</div>
 		{/if}
 	</div>
-	<img src="/favicon.png" alt="meteor" />
+	<img src="/astrologenie/favicon.png" alt="meteor" />
 </div>
 
 <style>

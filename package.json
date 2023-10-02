@@ -40,6 +40,7 @@
 		"@astrodraw/astrochart": "^3.0.2",
 		"@jamescoyle/svelte-icon": "^0.1.1",
 		"@mdi/js": "^7.2.96",
+		"@sveltejs/adapter-static": "^2.0.3",
 		"axios": "^1.5.1",
 		"circular-natal-horoscope-js": "^1.1.0",
 		"moment-timezone": "^0.5.43"

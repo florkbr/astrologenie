@@ -69,7 +69,7 @@
 
 	onMount(async () => {
 		if (profile === null) {
-			goto('/profile');
+			goto('/astrologenie/profile');
 		}
 
 		const astrochart = await import('@astrodraw/astrochart');
@@ -109,7 +109,7 @@
 	<div id="chart" class="chart" class:hidden={!planets} />
 </section>
 {#if profile}
-	<a href="/profile/view/{profile.name}">Back to my profile</a>
+	<a href="/astrologenie/profile/view/{profile.name}">Back to my profile</a>
 {/if}
 
 <style>

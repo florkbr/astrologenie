@@ -8,7 +8,7 @@
 	$: profile = $profiles.find((p) => p.name === data.name) ?? null;
 
 	if (profile === null) {
-		goto('/profile');
+		goto('/astrologenie/profile');
 	}
 </script>
 
@@ -21,8 +21,8 @@
 	<div>
 		<ProfileView {profile} />
 		<div class="controls">
-			<a href="/profile/view/{profile.name}/chart">View my chart</a>
-			<a href="/profile">Back to profiles</a>
+			<a href="/astrologenie/profile/view/{profile.name}/chart">View my chart</a>
+			<a href="/astrologenie/profile">Back to profiles</a>
 		</div>
 	</div>
 {/if}

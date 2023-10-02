@@ -16,7 +16,7 @@
 	<textarea bind:this={textArea} rows="20" bind:value={serialized_profiles} />
 	<div class="controls">
 		<button on:click={() => textArea.select()}>Select all</button>
-		<a href="/profile">Back to profiles</a>
+		<a href="/astrologenie/profile">Back to profiles</a>
 	</div>
 </div>
 
