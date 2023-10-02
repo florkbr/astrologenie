@@ -29,6 +29,7 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/'
+          PUBLIC_POSITION_STACK_API_KEY: ${{secrets.PUBLIC_POSITION_STACK_API_KEY}}
         run: |
           npm run build
           touch build/.nojekyll
