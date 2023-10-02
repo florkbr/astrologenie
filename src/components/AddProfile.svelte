@@ -124,9 +124,9 @@
 	</div>
 	<div class="controls">
 		<button on:click={handleAdd}>Add</button>
-		<a href="/profile">Cancel</a>
+		<a href="/astrologenie/profile">Cancel</a>
 	</div>
-	<img src="/rocket.png" alt="spaceship" class="spaceship" />
+	<img src="/astrologenie/rocket.png" alt="spaceship" class="spaceship" />
 </form>
 
 <style>

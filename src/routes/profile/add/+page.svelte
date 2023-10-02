@@ -20,6 +20,6 @@
 		}
 
 		$profiles = [...$profiles, profile];
-		goto('/profile');
+		goto('/astrologenie/profile');
 	}}
 />

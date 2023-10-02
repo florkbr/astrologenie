@@ -30,9 +30,9 @@
 	<meta name="description" content="Astro Team Builder" />
 </svelte:head>
 <h3>Get started by creating profiles for yourself and your teammates!</h3>
-<a href="/profile/add">Add profile</a>
-<a href="/profile/import">Import profiles</a>
-<a href="/profile/export">Export profiles</a>
+<a href="/astrologenie/profile/add">Add profile</a>
+<a href="/astrologenie/profile/import">Import profiles</a>
+<a href="/astrologenie/profile/export">Export profiles</a>
 <h4>Loaded Profiles</h4>
 <span>View a profile by clicking the name.</span>
 <span>Delete a profile by clicking the trashcan next to the name.</span>
@@ -42,7 +42,7 @@
 	{/if}
 	{#each $profiles as profile}
 		<li>
-			<a href="/profile/view/{profile.name}">{profile.name}</a>
+			<a href="/astrologenie/profile/view/{profile.name}">{profile.name}</a>
 			<a
 				class="delete"
 				href="#delete"
