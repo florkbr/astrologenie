@@ -1,3 +1,16 @@
+# Description
+
+An application which allows you to type people's birth charts and then helps you determine if they are a good match
+for a work team or not, based on certain statistics pulled out from the synastry statistics we generate by comparing
+them to each other.
+
+You can check it in https://florkbr.github.io/astrologenie/.
+
+# Credits and recogniztions
+
+* [synastry-calculator](https://github.com/saskastrull/synastry-calculator) project from [saskastrull](https://github.com/saskastrull)
+from which we translated the aspects logic.
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
